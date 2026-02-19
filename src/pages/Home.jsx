@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react"
 import ListItem from "../components/ListItem"
-import { todos } from "../data"
+import axios from "axios"
+// import { todos } from "../data"
 
 export default function Home() {
+  const [todos, setTodos] = useState([])
+  useEffect(() => {
+    axios.get("http://localhost:3000/todos")
+    .then((res) => setTodos(res.data))
+  }, [])
+
   return (
     <>
       <h1>Home</h1>
