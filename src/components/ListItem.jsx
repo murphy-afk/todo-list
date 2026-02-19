@@ -1,7 +1,18 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function ListItem({ item }) {
   const [completed, setCompleted] = useState(item.completed);
+
+  useEffect(() => {
+    if (completed === item.completed) return; 
+    axios
+      .patch(`${import.meta.env.VITE_BACKEND_URL}/${item.id}`, { completed })
+      .then((res) => console.log("Updated:", res.data))
+      .catch((err) => console.error(err));
+  },
+    [completed, item.completed, item.id]);
+
   const priorityStyles = {
     Low: "bg-green-700/40 text-green-300 border-green-500/40",
     Medium: "bg-yellow-700/40 text-yellow-300 border-yellow-500/40",
@@ -27,9 +38,9 @@ export default function ListItem({ item }) {
         </p>
 
         <p className={`font-semibold ${completed ? "text-green-400" : "text-yellow-400"}`} >
-          {completed ? "Completed" : <button 
-          className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
-          onClick={(e) => setCompleted(true)}>Mark as Done</button>}
+          {completed ? "Completed" : <button
+            className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+            onClick={(e) => setCompleted(true)}>Mark as Done</button>}
         </p>
       </div>
     </li>
