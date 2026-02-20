@@ -26,7 +26,7 @@ export default function ListItem({ item }) {
         <h3 className="text-xl font-semibold text-teal-200">{item.title}</h3>
 
         <span className={`text-xs px-3 py-1 rounded-full border ${priorityStyles[item.priority]}`} >
-          Priority {item.priority}
+          {item.priority.toUpperCase()}
         </span>
       </div>
 
