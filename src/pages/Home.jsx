@@ -5,12 +5,13 @@ import axios from "axios"
 export default function Home() {
   const [todos, setTodos] = useState([])
   const [completed, setCompleted] = useState(false)
+  const [order, setOrder] = useState("desc")
   
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}?completed=${completed}`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}?completed=${completed}&order=${order}`)
       .then((res) => setTodos(res.data))
-  }, [completed])
+  }, [completed, order])
 
   return (
     <div className="min-h-screen bg-gray-900 text-white px-6 py-10">
@@ -32,6 +33,10 @@ export default function Home() {
           >
             Show Completed
           </button>
+          <select name="order" id="order-select" className="ml-2 px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700" onChange={(e) => setOrder(e.target.value)}>
+            <option value="desc">Newest</option>
+            <option value="asc">Oldest</option>
+          </select>
         </div>
 
         <ul className="space-y-4">
